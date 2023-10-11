@@ -5,5 +5,12 @@
   "action":{
       "default_popup": "index.html",
       "default_title": "Near horizon"
-  }
+  },
+  "permissions": ["activeTab"],
+  "content_scripts": [
+    {
+      "matches": ["https://near.org/*"],
+      "js": ["script.js"]
+    }
+  ]
 }
