@@ -7,9 +7,26 @@ const icon = `
 </svg>
 `
 
+const createPopover = (address, i) => {
+  let popover = document.createElement('div')
+  popover.style.position = 'relative'
+  const id = `near-horizon-popover-${address}-${i}`
+  popover.innerHTML = `
+<div id="${id}" style="padding: 1rem; border: 1px solid #ccc; border-radius: 4px; display: none; position: absolute; z-index: 10; background-color: white;">
+  the address: ${address}
+</div>
+`
+  return popover
+}
+
 setInterval(() => {
-  document.querySelectorAll('button[title="Like"]').forEach((e) => {
+  document.querySelectorAll('button[title="Like"]').forEach((e, i) => {
     if (e.parentElement.querySelector('.tipme')) return
+    const url = new URL(e.parentNode.parentNode.parentNode.querySelector('a').href.replaceAll('#', ''))
+    const address = url.searchParams.get('accountId')
+    console.log('addr', address)
+    const popover = createPopover(address, i)
+
     const newButton = document.createElement('i')
     newButton.classList.add('tipme')
     newButton.style.color = 'rgb(104, 112, 118)'
@@ -17,8 +34,14 @@ setInterval(() => {
     newButton.style.cursor = 'pointer'
     newButton.innerHTML = icon
     newButton.title = "Tip user"
+    newButton.addEventListener('click', () => {
+      let popover = document.querySelector(`#near-horizon-popover-${address.replaceAll('.', '\\.')}-${i}`)
+      console.log(popover, address, i)
+      popover.style.display = popover.style.display === 'block' ? 'none' : 'block'
+    })
 
     e.parentElement.appendChild(newButton)
+    e.parentElement.appendChild(popover)
   })
   console.log('run')
   // interval might be shorter for better ux but (worse performance)?
