@@ -6,11 +6,15 @@
       "default_popup": "index.html",
       "default_title": "Near horizon"
   },
-  "permissions": ["activeTab"],
+  "permissions": ["activeTab", "tabs", "storage", "scripting"],
   "content_scripts": [
     {
       "matches": ["https://near.org/*"],
       "js": ["script.js"]
     }
-  ]
+  ],
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'",
+    "web_accessible_resources": "script-src 'self' https://cdn.jsdelivr.net; object-src 'self'"
+  }
 }

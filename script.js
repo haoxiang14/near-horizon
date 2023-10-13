@@ -14,6 +14,138 @@ const createPopover = (address, i) => {
   popover.innerHTML = `
 <div id="${id}" style="padding: 1rem; border: 1px solid #ccc; border-radius: 4px; display: none; position: absolute; z-index: 10; background-color: white;">
   the address: ${address}
+<div class="p-4 p-sm-5" style="width: 20rem">
+  <div class="card">
+    <div class="card-body">
+      <h5 class="card-title">NEAR TIP JAR</h5>
+      <p class="card-text">Please Sign In to tip the user</p>
+      <button id="sign-in-button" type="button" class="btn btn-primary">Connect Wallet</button>
+      <button id="sign-out-button" type="button" class="btn btn-secondary">Sign Out</button>
+      <div id="account-id"></div>
+      <div id="account-balance"></div>
+
+      <div id="tip-section" style="display: none;">
+        <input type="text" id="tip-user" placeholder="Enter accountId(xxx.testnet)">
+        <h6>Enter Tip Amount:</h6>
+        <input type="number" id="tip-amount" min="1" placeholder="Enter tip amount Ⓝ">
+        <button id="tip-button" class="btn btn-success">Tip</button>
+      </div>
+    </div>
+
+
+  </div>
+  
+  <!-- near html js script -->
+  <script src="https://cdn.jsdelivr.net/npm/near-api-js@0.44.2/dist/near-api-js.min.js" integrity="sha256-W5o4c5DRZZXMKjuL41jsaoBpE/UHMkrGvIxN9HcjNSY=" crossorigin="anonymous"></script>
+
+  <script>
+      const { connect, keyStores, WalletConnection, utils } = nearApi;
+
+      const myKeyStore = new keyStores.BrowserLocalStorageKeyStore();
+
+      const connectionConfig = {
+          networkId: "testnet",
+          keyStore: myKeyStore,
+          nodeUrl: "https://rpc.testnet.near.org",
+          walletUrl: "https://wallet.testnet.near.org",
+          helperUrl: "https://helper.testnet.near.org",
+          explorerUrl: "https://explorer.testnet.near.org",
+      };
+
+      let wallet; //wallet connection (public)
+
+      async function initializeNear() {
+          const nearConnection = await connect(connectionConfig);
+          wallet = new WalletConnection(nearConnection, "testnear");
+          return wallet;
+      }
+
+      async function sendTip() {
+        const tipUser = document.getElementById("tip-user").value;
+        const tipAmount = document.getElementById("tip-amount").value;
+
+        if (tipUser === "" || tipAmount === "") {
+            alert("Please enter a valid tip amount and user");
+            return;
+        }
+
+        try {
+            const yoctoNEARTipAmount = utils.format.parseNearAmount(tipAmount);
+
+            if (!wallet.isSignedIn()) {
+                alert("Please connect the wallet and sign in.");
+                return;
+            }
+
+            let account;
+            if (wallet.isSignedIn()) {
+                account = wallet.account();
+            } else {
+                account = nearConnection.account(wallet.getAccountId());
+            }
+
+            // Send the tip
+            await account.sendMoney(tipUser, yoctoNEARTipAmount);
+
+            alert("Tip sent successfully");
+        } catch (error) {
+            alert("Error sending tip: " + error);
+        }
+    }
+
+
+      async function updateUI(wallet) {
+          const accountIdDisplay = document.getElementById("account-id");
+          const accountBalanceDisplay = document.getElementById("account-balance");
+          const tipSection = document.getElementById("tip-section");
+
+          if (wallet.isSignedIn()) {
+              const accountId = wallet.getAccountId();
+              accountIdDisplay.innerText = "Signed in as: " + accountId;
+              tipSection.style.display = "block";  // Show tip section
+              
+              //get account balance
+              const account = await wallet.account();
+              const accountBalance = await account.getAccountBalance();
+              const amountInNear = utils.format.formatNearAmount(accountBalance.available, 2);
+              accountBalanceDisplay.innerText = "Account Balance: " + amountInNear + " Ⓝ";
+          
+          
+            } else {
+              accountIdDisplay.innerText = "Not signed in";
+              tipSection.style.display = "none";  // Hide tip section if not signed in
+              accountBalanceDisplay.innerText = "";
+          
+          }
+      }
+
+      document.addEventListener("DOMContentLoaded", async () => {
+          const wallet = await initializeNear();
+
+          const signInButton = document.getElementById("sign-in-button");
+          const signOutButton = document.getElementById("sign-out-button");
+
+          signInButton.addEventListener("click", async () => {
+              console.log("signing in");
+              await wallet.requestSignIn("testnear");
+              updateUI(wallet);  // Update UI after sign in
+          });
+
+          signOutButton.addEventListener("click", () => {
+              wallet.signOut();
+              console.log("User signed out");
+              updateUI(wallet);  // Update UI after sign out
+          });
+
+          // Update UI on page load
+          updateUI(wallet);
+
+          const tipButton = document.getElementById("tip-button");
+          tipButton.addEventListener("click", sendTip);
+      });
+   </script>
+
+</div>
 </div>
 `
   return popover
