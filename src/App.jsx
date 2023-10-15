@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import './App.css'
 import 'near-api-js/dist/near-api-js.min.js';
 const { keyStores, connect, WalletConnection } = window.nearApi;
@@ -22,7 +22,7 @@ function App() {
   const [wallet, setWallet] = useState()
   useEffect(() => {
     initializeNear().then((wallet) => {
-      console.log("don't be undefined pls", wallet)
+      console.log("don't be undefined pls", wallet.account("haoxiang14.near"))
       setWallet(wallet)
     })
   }, [])
