@@ -33,10 +33,10 @@ export default function Popover({ address, wallet }) {
     <>
       <div style={{ position: "absolute", backgroundColor: "#fff", zIndex: 100 }}>
         <p> Tip {address}</p>
-        <button> 1 </button>
-        <button> 2 </button>
-        <button> 5 </button>
-        <button> 10 </button>
+        <button onClick={() => setAmt(1)}> 1 </button>
+        <button onClick={() => setAmt(2)}> 2 </button>
+        <button onClick={() => setAmt(5)}> 5 </button>
+        <button onClick={() => setAmt(10)}> 10 </button>
         <p> Custom Amount </p>
         <input type="text" id="amount" placeholder="Enter amount in NEAR" value={amt} onChange={(e) => setAmt(e.target.value)} />
         <button onClick={sendTip}> Tip </button>
