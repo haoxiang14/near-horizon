@@ -1,20 +1,12 @@
 {
   "manifest_version": 3,
-  "name": "Near horizon",
-  "version": "0.0.1",
-  "action":{
-      "default_popup": "index.html",
-      "default_title": "Near horizon"
-  },
-  "permissions": ["activeTab", "tabs", "storage", "scripting"],
+  "name": "CRXJS React Vite Example",
+  "version": "1.0.0",
+  "action": { "default_popup": "index.html" },
   "content_scripts": [
     {
-      "matches": ["https://near.org/*"],
-      "js": ["script.js"]
+      "js": ["src/content.jsx"],
+      "matches": ["https://near.org/*"]
     }
-  ],
-  "content_security_policy": {
-    "extension_pages": "script-src 'self'; object-src 'self'",
-    "web_accessible_resources": "script-src 'self' https://cdn.jsdelivr.net; object-src 'self'"
-  }
+  ]
 }
