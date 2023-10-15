@@ -4,11 +4,10 @@ const { keyStores, connect, WalletConnection } = window.nearApi;
 import './App.css'
 
 async function initializeNear() {
-  console.log("cibai")
   const myKeyStore = new keyStores.BrowserLocalStorageKeyStore();
   const connectionConfig = {
     networkId: "mainnet",
-    keyStore: "", // first create a key store
+    keyStore: myKeyStore, // first create a key store
     nodeUrl: "https://rpc.mainnet.near.org",
     walletUrl: "https://wallet.mainnet.near.org",
     helperUrl: "https://helper.mainnet.near.org",
@@ -18,6 +17,7 @@ async function initializeNear() {
   let wallet = new WalletConnection(nearConnection, "testnear");
   return wallet;
 }
+
 async function sendTip() {
   const tipUser = document.getElementById("tip-user").value;
   const tipAmount = document.getElementById("tip-amount").value;
