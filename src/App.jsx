@@ -5,7 +5,6 @@ import './App.css'
 import Popover from "./Popover";
 
 async function initializeNear() {
-  console.log("cibai")
   const myKeyStore = new keyStores.BrowserLocalStorageKeyStore();
   const connectionConfig = {
     networkId: "mainnet",
@@ -19,6 +18,7 @@ async function initializeNear() {
   let wallet = new WalletConnection(nearConnection, "testnear");
   return wallet;
 }
+
 async function sendTip() {
   const tipUser = document.getElementById("tip-user").value;
   const tipAmount = document.getElementById("tip-amount").value;
