@@ -18,7 +18,6 @@ async function initializeNear() {
   let wallet = new WalletConnection(nearConnection, "testnear");
   return wallet;
 }
-
 async function sendTip() {
   const tipUser = document.getElementById("tip-user").value;
   const tipAmount = document.getElementById("tip-amount").value;
@@ -86,7 +85,7 @@ function App() {
 
   return (
     <div style={{ display: "block" }}>
-      <button id="sign-in-button" style={{ marginTop: "2rem" }} onClick={() => console.log("fuck u", wallet)}>sign in cibai</button>
+      <button id="sign-in-button" style={{ marginTop: "2rem" }} onClick={() => console.log(wallet)}>sign in cibai</button>
       <Popover/>
     </div >
   )
