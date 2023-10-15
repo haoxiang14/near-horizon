@@ -24,6 +24,7 @@ const createPopover = (address, i) => {
   let popover = document.createElement('div')
   popover.id = `near-horizon-popover-${address}-${i}`
   popover.style.position = 'relative'
+  popover.style.display = 'none'
   return popover
 }
 
@@ -41,8 +42,9 @@ const createButton = () => {
 setInterval(() => {
   document.querySelectorAll('button[title="Like"]').forEach((e, i) => {
     if (e.parentElement.querySelector('.tipme')) return
-    const url = new URL(e.parentNode.parentNode.parentNode.querySelector('a').href.replaceAll('#', ''))
-    const address = url.searchParams.get('accountId')
+    const url = e.parentNode.parentNode.parentNode.querySelector('a').href.split('accountId=')
+    const address = url[url.length - 1]
+    console.log('babi', address, url)
     let popover = createPopover(address, i)
     let button = createButton()
 
@@ -57,7 +59,7 @@ setInterval(() => {
 
     ReactDOM.createRoot(popover).render(
       <React.StrictMode>
-        <Popover />
+        <Popover address={address} />
       </React.StrictMode>
     );
 
