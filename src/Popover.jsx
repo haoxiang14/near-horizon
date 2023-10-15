@@ -48,9 +48,9 @@ export default function Popover({ address, wallet }) {
   }
 
   return (
-    <>
-      <div style={{ position: "absolute", backgroundColor: "#fff", zIndex: 100, display: "flex", flexDirection: "column", gap: ".5rem", border: "1px solid #ccc", borderRadius: "4px", padding: "1rem", textAlign: "left", width: "16rem" }} className="shadow-lg">
-        <p style={{ fontSize: "1.5rem", fontWeight: "bold", margin: "0" }}> Tip {address}</p>
+    <div style={{ position: "absolute", backgroundColor: "#fff", zIndex: 100 }} className="shadow-lg">
+      <div style={{ position: "relative", display: "flex", flexDirection: "column", gap: ".5rem", border: "1px solid #ccc", borderRadius: "4px", padding: "1rem", textAlign: "left", width: "16rem", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
+        <p style={{ width: "100%", fontWeight: "bold", margin: "0" }}> Tip {address}</p>
         <div>
           <p style={{ margin: "4px" }}>Select an ammount: </p>
           <div style={{ display: "flex", gap: ".5rem" }}>
@@ -66,6 +66,6 @@ export default function Popover({ address, wallet }) {
         </div>
         <button onClick={sendTip} style={{ ...buttonStyles, width: "100%", fontSize: "1rem" }}> Tip </button>
       </div >
-    </>
+    </div >
   )
 }

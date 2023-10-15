@@ -84,5 +84,5 @@ initializeNear().then((w) => {
 
     })
     // interval might be shorter for better ux but (worse performance)?
-  }, 4000)
+  }, 10000)
 });
