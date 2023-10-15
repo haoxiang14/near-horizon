@@ -1,8 +1,20 @@
-# React + Vite
+# Near Horizon
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Intro
 
-Currently, two official plugins are available:
+![image](https://github.com/haoxiang14/near-horizon/assets/51780559/f9a2c30c-9ef0-4f0b-9485-86ed962b473b)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Tech Stack
+* React
+* Vite
+* crxjs Vite Plugin
+* Near JS API
+
+## Development
+```bash
+$ git clone https://github.com/haoxiang14/near-horizon.git
+$ cd near-horizon
+$ pnpm i
+$ pnpm dev # run dev server
+$ pnpm build # build extension
+```
