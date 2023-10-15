@@ -18,38 +18,6 @@ async function initializeNear() {
   let wallet = new WalletConnection(nearConnection, "testnear");
   return wallet;
 }
-async function sendTip() {
-  const tipUser = document.getElementById("tip-user").value;
-  const tipAmount = document.getElementById("tip-amount").value;
-
-  if (tipUser === "" || tipAmount === "") {
-    alert("Please enter a valid tip amount and user");
-    return;
-  }
-
-  try {
-    const yoctoNEARTipAmount = utils.format.parseNearAmount(tipAmount);
-
-    if (!wallet.isSignedIn()) {
-      alert("Please connect the wallet and sign in.");
-      return;
-    }
-
-    let account;
-    if (wallet.isSignedIn()) {
-      account = wallet.account();
-    } else {
-      account = nearConnection.account(wallet.getAccountId());
-    }
-
-    // Send the tip
-    await account.sendMoney(tipUser, yoctoNEARTipAmount);
-
-    alert("Tip sent successfully");
-  } catch (error) {
-    alert("Error sending tip: " + error);
-  }
-}
 
 async function updateUI(wallet) {
   const accountIdDisplay = document.getElementById("account-id");
@@ -84,9 +52,8 @@ function App() {
 
 
   return (
-    <div style={{ display: "block" }}>
-      <button id="sign-in-button" style={{ marginTop: "2rem" }} onClick={() => console.log(wallet)}>sign in cibai</button>
-      <Popover/>
+    <div style={{ display: "none" }}>
+      <button id="sign-in-button" style={{ marginTop: "2rem" }} onClick={() => console.log("fuck u", wallet)}>sign in cibai</button>
     </div >
   )
 }
