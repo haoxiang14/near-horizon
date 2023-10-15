@@ -1,37 +1,33 @@
 import { useState } from "react"
+const { utils } = window.nearApi;
 
-export default function Popover({ address }) {
-  const [amt, setAmt] = useState()
+export default function Popover({ address, wallet }) {
+  const [amt, setAmt] = useState("")
 
-  async function sendTip() {
+  const sendTip = async () => {
     if (!amt && amt.length === 0) {
       alert("Please enter a valid tip amount and user");
       return;
     }
 
     try {
-      const yoctoNEARTipAmount = utils.format.parseNearAmount(tipAmount);
-
-      if (!wallet.isSignedIn()) {
-        alert("Please connect the wallet and sign in.");
-        return;
-      }
+      const yoctoNEARTipAmount = utils.format.parseNearAmount(amt);
 
       let account = wallet.account();
 
-      alert("fuck", yoctoNEARTipAmount)
+      console.log("fuck", yoctoNEARTipAmount, account)
       // Send the tip
-      // await account.sendMoney(address, yoctoNEARTipAmount);
+      await account.sendMoney(address, yoctoNEARTipAmount);
 
       alert("Tip sent successfully");
     } catch (error) {
-      alert("Error sending tip: " + error);
+      console.log("Error sending tip: " + error);
     }
   }
 
   return (
     <>
-      <div style={{ position: "absolute", backgroundColor: "#fff" }}>
+      <div style={{ position: "absolute", backgroundColor: "#fff", zIndex: 100 }}>
         <p> Tip {address}</p>
         <button> 1 </button>
         <button> 2 </button>
