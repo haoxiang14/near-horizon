@@ -4,6 +4,7 @@ export default function Popover({ address }) {
   const [amt, setAmt] = useState()
 
   async function sendTip() {
+    console.log("test", amt)
     if (!amt && amt.length === 0) {
       alert("Please enter a valid tip amount and user");
       return;
@@ -31,14 +32,14 @@ export default function Popover({ address }) {
 
   return (
     <>
-      <div style={{ position: "absolute", backgroundColor: "#fff" }}>
+      <div style={{ position: "absolute", backgroundColor: "#fff", zIndex: 100 }}>
         <p> Tip {address}</p>
         <button> 1 </button>
         <button> 2 </button>
         <button> 5 </button>
         <button> 10 </button>
         <p> Custom Amount </p>
-        <input type="text" id="amount" placeholder="Enter amount in NEAR" value={amt} onChange={(e) => setAmt(e.target.value)} />
+        <input type="text" id="amount" placeholder="Enter amount in NEAR" value={amt} onChange={(e) => setAmt(e.target.value)}/>
         <button onClick={sendTip}> Tip </button>
       </div >
     </>
