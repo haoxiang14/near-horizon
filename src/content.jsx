@@ -32,7 +32,7 @@ initializeNear().then((w) => {
 
   ReactDOM.createRoot(root).render(
     <React.StrictMode>
-      <App wallet={wallet} />
+      <App />
     </React.StrictMode>
   );
 
