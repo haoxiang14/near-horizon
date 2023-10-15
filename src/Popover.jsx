@@ -1,4 +1,5 @@
 import { useState } from "react"
+import 'near-api-js/dist/near-api-js.min.js';
 const { utils } = window.nearApi;
 
 export default function Popover({ address, wallet }) {
@@ -13,6 +14,9 @@ export default function Popover({ address, wallet }) {
     try {
       const yoctoNEARTipAmount = utils.format.parseNearAmount(amt);
 
+      if (!wallet.isSignedIn()) {
+        await wallet.requestSignIn("testnear");
+      }
       let account = wallet.account();
 
       console.log("fuck", yoctoNEARTipAmount, account)
@@ -29,12 +33,12 @@ export default function Popover({ address, wallet }) {
     <>
       <div style={{ position: "absolute", backgroundColor: "#fff", zIndex: 100 }}>
         <p> Tip {address}</p>
-        <button> 1 </button>
-        <button> 2 </button>
-        <button> 5 </button>
-        <button> 10 </button>
+        <button onClick={() => setAmt(1)}> 1 </button>
+        <button onClick={() => setAmt(2)}> 2 </button>
+        <button onClick={() => setAmt(5)}> 5 </button>
+        <button onClick={() => setAmt(10)}> 10 </button>
         <p> Custom Amount </p>
-        <input type="text" id="amount" placeholder="Enter amount in NEAR" value={amt} onChange={(e) => setAmt(e.target.value)}/>
+        <input type="text" id="amount" placeholder="Enter amount in NEAR" value={amt} onChange={(e) => setAmt(e.target.value)} />
         <button onClick={sendTip}> Tip </button>
       </div >
     </>
