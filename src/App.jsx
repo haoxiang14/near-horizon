@@ -2,13 +2,14 @@ import { useState, useEffect } from 'react'
 import 'near-api-js/dist/near-api-js.min.js';
 const { keyStores, connect, WalletConnection } = window.nearApi;
 import './App.css'
+import Popover from "./Popover";
 
 async function initializeNear() {
   console.log("cibai")
   const myKeyStore = new keyStores.BrowserLocalStorageKeyStore();
   const connectionConfig = {
     networkId: "mainnet",
-    keyStore: "", // first create a key store
+    keyStore: myKeyStore, // first create a key store
     nodeUrl: "https://rpc.mainnet.near.org",
     walletUrl: "https://wallet.mainnet.near.org",
     helperUrl: "https://helper.mainnet.near.org",
@@ -86,6 +87,7 @@ function App() {
   return (
     <div style={{ display: "block" }}>
       <button id="sign-in-button" style={{ marginTop: "2rem" }} onClick={() => console.log("fuck u", wallet)}>sign in cibai</button>
+      <Popover/>
     </div >
   )
 }
