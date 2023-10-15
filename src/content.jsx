@@ -16,9 +16,9 @@ async function initializeNear() {
     helperUrl: "https://helper.mainnet.near.org",
     explorerUrl: "https://explorer.mainnet.near.org",
   };
+  console.log("keystor: ", myKeyStore)
   const nearConnection = await connect(connectionConfig);
   let wallet = new WalletConnection(nearConnection, "testnear");
-  console.log('cib', wallet, nearConnection)
   return wallet;
 }
 
@@ -32,7 +32,7 @@ initializeNear().then((w) => {
 
   ReactDOM.createRoot(root).render(
     <React.StrictMode>
-      <App />
+      <App wallet={wallet} />
     </React.StrictMode>
   );
 
