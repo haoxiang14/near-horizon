@@ -16,7 +16,6 @@ async function initializeNear() {
     helperUrl: "https://helper.mainnet.near.org",
     explorerUrl: "https://explorer.mainnet.near.org",
   };
-  console.log("keystor: ", myKeyStore)
   const nearConnection = await connect(connectionConfig);
   let wallet = new WalletConnection(nearConnection, "testnear");
   return wallet;
@@ -71,7 +70,6 @@ initializeNear().then((w) => {
 
       button.addEventListener('click', () => {
         let popover = document.querySelector(`#near-horizon-popover-${address.replaceAll('.', '\\.')}-${i}`)
-        console.log(popover, address, i)
         popover.style.display = popover.style.display === 'block' ? 'none' : 'block'
       })
 
